@@ -1,23 +1,34 @@
 package com.openclassrooms.tourguide.user;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import gpsUtil.location.VisitedLocation;
 import tripPricer.Provider;
 
+/**
+ * Represents a user with a list of visited locations, rewards, preferences,
+ * and trip deals. The user's collections are thread-safe, using
+ * CopyOnWriteArrayList to handle concurrent access.
+ *
+ * Changes made:
+ * - Replaced ArrayList with CopyOnWriteArrayList for thread safety,
+ *   preventing ConcurrentModificationException during concurrent access.
+ * - Simplified the addUserReward method to improve readability by using
+ *   noneMatch instead of filtering and counting.
+ */
 public class User {
 	private final UUID userId;
 	private final String userName;
 	private String phoneNumber;
 	private String emailAddress;
 	private Date latestLocationTimestamp;
-	private List<VisitedLocation> visitedLocations = new ArrayList<>();
-	private List<UserReward> userRewards = new ArrayList<>();
+	private List<VisitedLocation> visitedLocations = new CopyOnWriteArrayList<>();
+	private List<UserReward> userRewards = new CopyOnWriteArrayList<>();
 	private UserPreferences userPreferences = new UserPreferences();
-	private List<Provider> tripDeals = new ArrayList<>();
+	private List<Provider> tripDeals = new CopyOnWriteArrayList<>();
 	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
 		this.userId = userId;
 		this.userName = userName;
@@ -68,9 +79,9 @@ public class User {
 	public void clearVisitedLocations() {
 		visitedLocations.clear();
 	}
-	
+
 	public void addUserReward(UserReward userReward) {
-		if(userRewards.stream().filter(r -> !r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
+		if(userRewards.stream().noneMatch(r -> r.attraction.attractionName.equals(userReward.attraction.attractionName))) {
 			userRewards.add(userReward);
 		}
 	}
