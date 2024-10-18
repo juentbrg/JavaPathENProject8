@@ -1,20 +1,14 @@
 package com.openclassrooms.tourguide.service;
 
 import com.openclassrooms.tourguide.helper.InternalTestHelper;
+import com.openclassrooms.tourguide.pojo.AttractionDTO;
 import com.openclassrooms.tourguide.tracker.Tracker;
 import com.openclassrooms.tourguide.user.User;
 import com.openclassrooms.tourguide.user.UserReward;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -27,6 +21,7 @@ import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 
+import rewardCentral.RewardCentral;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
 
@@ -36,14 +31,16 @@ public class TourGuideService {
 	private final GpsUtil gpsUtil;
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
+	private final RewardCentral rewardCentral;
 	public final Tracker tracker;
 	boolean testMode = true;
 
-	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
+	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService, RewardCentral rewardCentral) {
 		this.gpsUtil = gpsUtil;
 		this.rewardsService = rewardsService;
-		
-		Locale.setDefault(Locale.US);
+        this.rewardCentral = rewardCentral;
+
+        Locale.setDefault(Locale.US);
 
 		if (testMode) {
 			logger.info("TestMode enabled");
@@ -95,15 +92,28 @@ public class TourGuideService {
 		return visitedLocation;
 	}
 
-	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
-		List<Attraction> nearbyAttractions = new ArrayList<>();
-		for (Attraction attraction : gpsUtil.getAttractions()) {
-			if (rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
-				nearbyAttractions.add(attraction);
-			}
-		}
-
-		return nearbyAttractions;
+	/**
+	 * Retrieves the five closest tourist attractions to the user's visited location.
+	 *
+	 * This method returns a list of {@link AttractionDTO} objects, each containing
+	 * the attraction's name, coordinates, the user's location, the distance in miles
+	 * from the user, and reward points for visiting the attraction.
+	 *
+	 * @param visitedLocation the user's current location.
+	 * @return a list of the five closest {@link AttractionDTO} objects.
+	 */
+	public List<AttractionDTO> getNearByAttractions(VisitedLocation visitedLocation) {
+		return gpsUtil.getAttractions().stream()
+				.sorted(Comparator.comparingDouble(location -> rewardsService.getDistance(location, visitedLocation.location)))
+				.limit(5)
+				.map(attraction -> new AttractionDTO(
+						attraction.attractionName,
+						new Location(attraction.latitude, attraction.longitude),
+						new Location(visitedLocation.location.latitude, visitedLocation.location.longitude),
+						rewardsService.getDistance(new Location(attraction.latitude, attraction.longitude), visitedLocation.location),
+						rewardCentral.getAttractionRewardPoints(attraction.attractionId, visitedLocation.userId)
+				))
+				.toList();
 	}
 
 	private void addShutDownHook() {
