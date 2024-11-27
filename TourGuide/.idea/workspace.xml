@@ -4,17 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85a26878-4e6e-4cdd-b31b-c1128d1f98d5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/openclassrooms/tourguide/pojo/AttractionDTO.java" afterDir="false" />
+    <list default="true" id="ed7576dc-5765-40fc-bdd9-da0351c9221d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/tourguide/TourGuideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/openclassrooms/tourguide/TourGuideController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/tourguide/service/RewardsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/openclassrooms/tourguide/service/RewardsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/openclassrooms/tourguide/service/TourGuideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/openclassrooms/tourguide/service/TourGuideService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/openclassrooms/tourguide/TestPerformance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/openclassrooms/tourguide/TestPerformance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/openclassrooms/tourguide/TestRewardsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/openclassrooms/tourguide/TestRewardsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/openclassrooms/tourguide/TestTourGuideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/openclassrooms/tourguide/TestTourGuideService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/TourGuideController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/TourGuideController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/service/RewardsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/service/RewardsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/service/TourGuideService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/service/TourGuideService$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/service/TourGuideService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/service/TourGuideService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/user/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/tracker/Tracker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/openclassrooms/tourguide/tracker/Tracker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/openclassrooms/tourguide/TestPerformance.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/openclassrooms/tourguide/TestPerformance.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/openclassrooms/tourguide/TestRewardsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/openclassrooms/tourguide/TestRewardsService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/com/openclassrooms/tourguide/TestTourGuideService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/openclassrooms/tourguide/TestTourGuideService.class" afterDir="false" />
@@ -24,20 +27,14 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
-}</component>
-  <component name="ProjectId" id="2nT9ypqOo59s4zmFttdm9ZP6fAR" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2pQVcbdeBLmyyqGOuBOPT6n1p4Y" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -45,13 +42,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "JUnit.TestRewardsService.executor": "Run",
-    "JUnit.TestRewardsService.nearAllAttractions.executor": "Run",
-    "JUnit.TestRewardsService.userGetRewards.executor": "Run",
-    "JUnit.TestTourGuideService.executor": "Run",
-    "JUnit.TestTourGuideService.getNearbyAttractions.executor": "Run",
-    "JUnit.TestTourGuideService.getTripDeals.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "dev",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -59,91 +51,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.TestTourGuideService.getTripDeals">
-    <configuration name="TestRewardsService" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tourguide" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.openclassrooms.tourguide.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.openclassrooms.tourguide" />
-      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.tourguide.TestRewardsService" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestRewardsService.userGetRewards" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tourguide" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.openclassrooms.tourguide.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.openclassrooms.tourguide" />
-      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.tourguide.TestRewardsService" />
-      <option name="METHOD_NAME" value="userGetRewards" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestTourGuideService" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tourguide" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.openclassrooms.tourguide.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.openclassrooms.tourguide" />
-      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.tourguide.TestTourGuideService" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestTourGuideService.getNearbyAttractions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tourguide" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.openclassrooms.tourguide.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.openclassrooms.tourguide" />
-      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.tourguide.TestTourGuideService" />
-      <option name="METHOD_NAME" value="getNearbyAttractions" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestTourGuideService.getTripDeals" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="tourguide" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.openclassrooms.tourguide.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.openclassrooms.tourguide" />
-      <option name="MAIN_CLASS_NAME" value="com.openclassrooms.tourguide.TestTourGuideService" />
-      <option name="METHOD_NAME" value="getTripDeals" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="TourGuide" />
       <method v="2">
@@ -153,9 +64,7 @@
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <module name="TourGuide" />
       <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
     <configuration name="TourguideApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="tourguide" />
@@ -164,37 +73,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.TestTourGuideService.getTripDeals" />
-        <item itemvalue="JUnit.TestRewardsService.userGetRewards" />
-        <item itemvalue="JUnit.TestTourGuideService.getNearbyAttractions" />
-        <item itemvalue="JUnit.TestTourGuideService" />
-        <item itemvalue="JUnit.TestRewardsService" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="85a26878-4e6e-4cdd-b31b-c1128d1f98d5" name="Changes" comment="" />
-      <created>1728986455611</created>
+      <changelist id="ed7576dc-5765-40fc-bdd9-da0351c9221d" name="Changes" comment="" />
+      <created>1732698367593</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1728986455611</updated>
-      <workItem from="1728986456793" duration="4205000" />
-      <workItem from="1729065863364" duration="11157000" />
-      <workItem from="1729077274924" duration="1889000" />
-      <workItem from="1729237900526" duration="3274000" />
-      <workItem from="1729243670740" duration="2216000" />
+      <updated>1732698367593</updated>
+      <workItem from="1732698370207" duration="1032000" />
     </task>
     <servers />
   </component>
