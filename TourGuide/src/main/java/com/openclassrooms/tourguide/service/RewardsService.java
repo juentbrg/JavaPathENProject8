@@ -25,7 +25,8 @@ public class RewardsService {
 	private int attractionProximityRange = 200;
 	private final GpsUtil gpsUtil;
 	private final RewardCentral rewardsCentral;
-	private final ExecutorService executor = Executors.newFixedThreadPool(32);
+	private final List<Attraction> attractions;
+	private final ExecutorService executor = Executors.newFixedThreadPool(64);
 
 	public ExecutorService getExecutor() {
 		return executor;
@@ -34,7 +35,8 @@ public class RewardsService {
 	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardCentral) {
 		this.gpsUtil = gpsUtil;
 		this.rewardsCentral = rewardCentral;
-	}
+        this.attractions = gpsUtil.getAttractions();
+    }
 	
 	public void setProximityBuffer(int proximityBuffer) {
 		this.proximityBuffer = proximityBuffer;
@@ -45,45 +47,52 @@ public class RewardsService {
 	}
 
 	/**
-	 * Calculates rewards for a user asynchronously based on their visited locations and nearby attractions.
+	 * Retrieves the list of rewards for a user asynchronously.
 	 *
-	 * <p>This method was refactored to return a {@link CompletableFuture} to enable asynchronous
-	 * processing of reward calculations. Previously, it synchronously retrieved attractions and calculated
-	 * rewards for each visited location, which could be time-consuming. The new implementation performs these
-	 * steps asynchronously, allowing for improved performance and responsiveness.
+	 * <p>The method has been refactored to improve performance and scalability by implementing
+	 * asynchronous processing, caching of attractions, and using a thread pool executor for concurrent computations.
+	 * Previously, the method directly accessed the user's rewards synchronously, but the new implementation
+	 * now leverages the following features:
 	 *
 	 * <ul>
-	 *   <li>Attractions are retrieved asynchronously using {@code gpsUtil.getAttractions}.</li>
-	 *   <li>For each visited location, the method iterates through the attractions and checks if a reward
-	 *       already exists for each attraction.</li>
-	 *   <li>If no reward exists and the attraction is near the visited location, the method calculates reward
-	 *       points and adds a new {@link UserReward} to the user's rewards.</li>
+	 *   <li>**Asynchronous Processing**: The calculation of rewards is handled using {@link CompletableFuture},
+	 *       allowing non-blocking operations and better responsiveness in multi-user scenarios.</li>
+	 *   <li>**Thread Pool Executor**: A dedicated thread pool with a fixed number of threads ({@code 64})
+	 *       is used to efficiently manage concurrent reward calculations.</li>
+	 *   <li>**Cached Attraction List**: The list of attractions is retrieved once and stored in memory,
+	 *       reducing redundant calls to {@code gpsUtil.getAttractions()} and improving performance.</li>
 	 * </ul>
 	 *
-	 * <p>The asynchronous approach allows for concurrent retrieval of attractions and reward calculations,
-	 * making the method more efficient for scenarios with multiple locations and attractions.
+	 * <p>**Key Behavior:**
+	 * <ul>
+	 *   <li>The method checks each visited location of the user against all cached attractions.</li>
+	 *   <li>For each attraction, it determines if the attraction is near the visited location using proximity checks.</li>
+	 *   <li>If the attraction is nearby and no reward has already been assigned for it, a new {@link UserReward}
+	 *       is created with the corresponding reward points and added to the user's rewards list.</li>
+	 * </ul>
 	 *
-	 * @param user The user for whom rewards are being calculated.
-	 * @return A {@link CompletableFuture} that completes when all reward calculations are done.
+	 * <p>The asynchronous implementation ensures that the rewards are calculated without blocking the main thread,
+	 * making the system more responsive in high-load environments.
+	 *
+	 * @param user The {@link User} whose rewards are to be calculated.
+	 * @return A {@link CompletableFuture} that completes with the updated list of rewards for the user.
 	 */
 	public CompletableFuture<Void> calculateRewards(User user) {
 		List<VisitedLocation> userLocations = user.getVisitedLocations();
-		System.out.println("ICI: " + userLocations.size());
 
-		return CompletableFuture.supplyAsync(gpsUtil::getAttractions, executor)
-				.thenAcceptAsync(attractions -> {
-					userLocations.forEach(visitedLocation -> {
-						attractions.forEach(attraction -> {
-							boolean alreadyRewarded = user.getUserRewards().stream()
-									.anyMatch(r -> r.attraction.attractionName.equals(attraction.attractionName));
+		return CompletableFuture.runAsync(() -> {
+			userLocations.forEach(visitedLocation -> {
+				attractions.forEach(attraction -> {
+					boolean alreadyRewarded = user.getUserRewards().stream()
+							.anyMatch(r -> r.attraction.attractionName.equals(attraction.attractionName));
 
-							if (!alreadyRewarded && nearAttraction(visitedLocation, attraction)) {
-								int rewardPoints = getRewardPoints(attraction, user);
-								user.addUserReward(new UserReward(visitedLocation, attraction, rewardPoints));
-							}
-						});
-					});
-				}, executor);
+					if (!alreadyRewarded && nearAttraction(visitedLocation, attraction)) {
+						int rewardPoints = getRewardPoints(attraction, user);
+						user.addUserReward(new UserReward(visitedLocation, attraction, rewardPoints));
+					}
+				});
+			});
+		}, executor);
 	}
 
 
@@ -137,4 +146,7 @@ public class RewardsService {
         return statuteMiles;
 	}
 
+	public List<Attraction> getAttractions() {
+		return attractions;
+	}
 }
