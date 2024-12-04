@@ -40,9 +40,9 @@ jobs:
         run: mvn clean compile
 
       # 5. Run unit tests and verification (excluding performance tests)
-      - name: Run tests without performance tests
+      - name: Run tests
         working-directory: TourGuide
-        run: mvn verify -Pskip-performance-tests
+        run: mvn verify
 
       # 6. Build the JAR artifact
       - name: Build jar
