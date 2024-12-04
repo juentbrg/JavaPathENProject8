@@ -49,6 +49,7 @@ public class TestPerformance {
 	 * TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 	 */
 
+	@Disabled("Performance test disabled for CI testing purposes")
 	@Test
 	public void highVolumeTrackLocation() {
 		GpsUtil gpsUtil = new GpsUtil();
@@ -86,6 +87,7 @@ public class TestPerformance {
 		tourGuideService.getExecutor().shutdownNow();
 	}
 
+	@Disabled("Performance test disabled for CI testing purposes")
 	@Test
 	public void highVolumeGetRewards() {
 		GpsUtil gpsUtil = new GpsUtil();

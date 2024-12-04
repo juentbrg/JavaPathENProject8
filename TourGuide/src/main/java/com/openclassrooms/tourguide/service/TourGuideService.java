@@ -93,7 +93,6 @@ public class TourGuideService {
 			return CompletableFuture.completedFuture(user.getLastVisitedLocation());
 	}
 
-
 	public User getUser(String userName) {
 		return internalUserMap.get(userName);
 	}
@@ -120,38 +119,42 @@ public class TourGuideService {
 	/**
 	 * Tracks the location of the specified user asynchronously and updates their visited locations.
 	 *
-	 * <p>This method was refactored to return a {@link CompletableFuture} in order to handle
-	 * the location tracking and reward calculation processes asynchronously. Previously, the method
-	 * was synchronous, directly fetching the user's location, updating their visited locations, and
-	 * calculating rewards. Now, it leverages asynchronous operations to improve performance, particularly
-	 * in environments where location retrieval and reward calculations may be time-consuming.
-	 *
+	 * <p>This method performs two asynchronous operations:
 	 * <ul>
-	 *   <li>The user's location is retrieved asynchronously using {@code gpsUtil.getUserLocation} with a
-	 *       custom {@code ExecutorService}.</li>
-	 *   <li>Once the location is obtained, it is added to the user's visited locations, and reward
-	 *       calculations are triggered asynchronously by calling {@code rewardsService.calculateRewards}.</li>
+	 *   <li>Retrieves the user's current location using {@code gpsUtil.getUserLocation}.</li>
+	 *   <li>Calculates rewards for the user based on their visited locations and nearby attractions,
+	 *       using {@code rewardsService.calculateRewards}.</li>
 	 * </ul>
 	 *
-	 * <p>This approach allows the method to return immediately, providing a {@code CompletableFuture}
-	 * that completes once both the location tracking and reward calculation processes are finished.
+	 * <p>The method returns a {@link CompletableFuture} that completes only after both the location
+	 * tracking and the reward calculation processes are finished. This ensures that the caller can
+	 * await the completion of all related tasks.
+	 *
+	 * <p>The {@code VisitedLocation} of the user is returned as part of the {@link CompletableFuture},
+	 * allowing the caller to access the tracked location if needed.
+	 *
+	 * <p>Key implementation details:
+	 * <ul>
+	 *   <li>The location retrieval and reward calculation processes are executed on a custom
+	 *       {@code ExecutorService} to avoid blocking the main thread.</li>
+	 *   <li>The {@link CompletableFuture#thenComposeAsync} method is used to chain the asynchronous
+	 *       reward calculation to the location retrieval, ensuring proper sequencing of tasks.</li>
+	 *   <li>The {@link CompletableFuture#thenApplyAsync} method is used to transform the final
+	 *       result, ensuring the {@link VisitedLocation} is returned after all tasks are complete.</li>
+	 * </ul>
 	 *
 	 * @param user The user whose location is being tracked.
 	 * @return A {@link CompletableFuture} containing the tracked {@link VisitedLocation} once
-	 *         all processing is complete.
+	 *         all processing (location tracking and reward calculation) is complete.
 	 */
 	public CompletableFuture<VisitedLocation> trackUserLocation(User user) {
-		CompletableFuture<VisitedLocation> completableFuture =
-				CompletableFuture.supplyAsync(() -> gpsUtil.getUserLocation(user.getUserId()), executor);
-
-		completableFuture.thenComposeAsync(visitedLocation -> {
-			user.addToVisitedLocations(visitedLocation);
-			return rewardsService.calculateRewards(user);
-		}, executor);
-
-		return completableFuture;
+		return CompletableFuture.supplyAsync(() -> gpsUtil.getUserLocation(user.getUserId()), executor)
+				.thenComposeAsync(visitedLocation -> {
+					user.addToVisitedLocations(visitedLocation);
+					return rewardsService.calculateRewards(user)
+							.thenApplyAsync(v -> visitedLocation, executor);
+				}, executor);
 	}
-
 
 	/**
 	 * Retrieves the five closest tourist attractions to the user's visited location.
