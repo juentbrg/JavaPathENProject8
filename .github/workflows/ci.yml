@@ -9,7 +9,7 @@ on:
     branches:
       - main
       - dev
-  workflow_dispatch: # Allow manual trigger from GitHub interface
+  workflow_dispatch:
 
 jobs:
   build:
@@ -29,18 +29,23 @@ jobs:
 
       # 3. Install dependencies and compile the project
       - name: Install dependencies and compile
+        working-directory: TourGuide
         run: mvn clean compile
 
       # 4. Run unit tests and verification (excluding performance tests)
       - name: Run tests without performance tests
+        working-directory: TourGuide
         run: mvn verify -Pskip-performance-tests
 
       # 5. Build the JAR artifact
       - name: Build jar
+        working-directory: TourGuide
         run: mvn clean package
 
       # 6. Upload the artifact for other jobs
       - name: Upload artifact
+        run: mv target/*.jar ../target/
+      - name: Upload artifact to GitHub
         uses: actions/upload-artifact@v3
         with:
           name: tourguide-jar
